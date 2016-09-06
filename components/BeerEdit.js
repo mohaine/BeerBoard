@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import {requestUpdateCfg} from '../actions/cfg'
 
+let labelClass = "col-md-4"
+let valueClass = "col-md-8"
 
 export class BeerEdit extends Component {
   constructor(props, context) {
@@ -10,23 +12,23 @@ export class BeerEdit extends Component {
     let {beer}  = this.props;
     this.state = {beer:Object.assign({}, beer, {})}
   }
-  createInputRow(title, field){
+  createInputRow(title, field,autofocus){
     return (<div className="row">
-      <div className="col-md-4">
+      <div className={labelClass}>
         {title}
       </div>
-      <div className="col-md-8">
-        <input type="text" style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}}/>
+      <div className={valueClass}>
+        <input type="text" style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}} autofocus={autofocus}/>
       </div>
     </div>
     )
   }
   createInputRowTextArea(title, field){
     return (<div className="row">
-      <div className="col-md-4">
+      <div className={labelClass}>
         {title}
       </div>
-      <div className="col-md-8">
+      <div className={valueClass}>
         <textarea value={this.state.beer[field]} style={{width: "100%", height:"5em"}} onChange={(e)=>{this.setValue(field,e.target.value)}}/>
       </div>
     </div>
@@ -45,14 +47,19 @@ export class BeerEdit extends Component {
     saveBeer(beer,cfg, close)
   }
   render() {
+        let {saveBeer,cfg, close} = this.props
+
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
-        {this.createInputRow('Name','name')}
+        {this.createInputRow('Name','name', true)}
         {this.createInputRow('Style','style')}
         {this.createInputRow('IBUs','ibu')}
-        {this.createInputRow('Color','color')}
+        {this.createInputRow('Srm','srm')}
         {this.createInputRowTextArea('Notes','notes')}
         <div className="row">
-          <button type="button" className="btn btn-primary" onClick={()=>this.save()} >Save</button>
+        <div className="btn-group">
+          <button type="button" className="btn btn-primary" onClick={()=>this.save()}>Save</button>
+          <button type="button" className="btn btn-default" onClick={()=> setTimeout(close,10) }>Close</button>
+        </div>
         </div>
         </div>)
   }
@@ -66,14 +73,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveBeer: (beer,cfg,close) => {
-      let newBeers = cfg.beers.map(b=>{
-        if(b.id == beer.id){
+    saveBeer: (beer, cfg, close) => {
+      let newBeers = cfg.beers.map(b => {
+        if (b.id == beer.id) {
           return beer
         } else return b
       })
-      let newCfg = Object.assign({}, cfg, {beers:newBeers})
-      dispatch(requestUpdateCfg(newCfg,close))
+      if (!beer.id) {
+        newBeers.push(beer);
+      }
+      let newCfg = Object.assign({}, cfg, {
+        beers: newBeers
+      })
+      dispatch(requestUpdateCfg(newCfg, close))
     }
   }
 }

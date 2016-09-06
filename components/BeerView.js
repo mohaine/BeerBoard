@@ -3,8 +3,15 @@ import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import QuickEdit from '../components/QuickEdit'
 import BeerEdit from '../components/BeerEdit'
+import {getSrmColor} from '../util/srm'
+
+
+let labelClass = "col-md-2"
+let valueClass = "col-md-6"
 
 export default class BeerView extends Component {
+
+
   constructor(props, context) {
     super(props, context)
     this.state = {editingBeer: false}
@@ -14,10 +21,10 @@ export default class BeerView extends Component {
     let value = beer[field]
     if(value) {
     return (<div className="row">
-      <div className="col-md-2">
+      <div className={labelClass}>
         {title}
       </div>
-      <div className="col-md-6">
+      <div className={valueClass}>
         {value}
       </div>
     </div>
@@ -25,19 +32,26 @@ export default class BeerView extends Component {
   }
 
   render() {
-       let stopEditing = ()=>this.setState({editingBeer: false})
+    let {beer} =  this.props
+    let stopEditing = ()=>this.setState({editingBeer: false})
 
-       return (<div className="container-fluid" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
+    return (<div className="container-fluid" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
 
-        {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
-          <BeerEdit beer={this.props.beer} close={stopEditing} />
-        </QuickEdit>}
+    {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
+      <BeerEdit beer={this.props.beer} close={stopEditing} />
+    </QuickEdit>}
 
-        {this.createRow('Name','name')}
-        {this.createRow('Style','style')}
-        {this.createRow('IBUs','ibu')}
-        {this.createRow('Color','color')}
-        {this.createRow('Notes','notes')}
+    {this.createRow('Name','name')}
+    {this.createRow('Style','style')}
+    {this.createRow('IBUs','ibu')}
+    {beer.srm && (<div className="row">
+      <div className={labelClass}>
+        SRM
+      </div>
+      <div className={valueClass}> <span style={{backgroundColor: getSrmColor(beer.srm), paddingLeft: "2em", paddingRight: "2em"}}> {beer.srm} </span> </div>
+      </div> )}
+
+    {this.createRow('Notes','notes')}
     </div>)
   }
 }
