@@ -1,0 +1,9 @@
+button.down {
+	border: 1px solid #88f;
+	background-color: #88f;
+	color: white;
+}
+
+.addStep{
+	padding: 3px;
+}

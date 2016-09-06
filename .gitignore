@@ -1,0 +1,5 @@
+*.bak
+cfg.json
+**.log
+node_modules/
+web/bundle.js
