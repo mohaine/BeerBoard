@@ -1,0 +1,40 @@
+{
+   "taps": [
+     {"position": 1,"id":"ViphaZsoEwMd"},
+     {"position": 2,"id":"EIPlmmPrEMnf"},
+     {"position": 3,"id":"ViphaZsoEwMd"},
+     {"position": 4,"id":"GEBrqiiSnNmx"}
+   ],
+   "beers": [
+      {
+         "id": "ViphaZsoEwMd",
+         "name": "Beer 1",
+         "style": "",
+         "ibu": "3",
+         "color": "3",
+         "notes": "Test",
+         "srm": "20"
+      },
+      {
+         "id": "EIPlmmPrEMnf",
+         "name": "Beer 2",
+         "style": "Style 2",
+         "srm": "3",
+         "ibu": "34"
+      },
+      {
+         "name": "Beer 3",
+         "id": "NBcfAztJhUTO",
+         "srm": "41",
+         "ibu": "9"
+      },
+      {
+         "ibu": "6",
+         "srm": "33",
+         "id": "GEBrqiiSnNmx",
+         "style": "Style",
+         "name": "Beer 4"
+      }
+   ],
+   "version": "CYAxjbPfdbDo"
+}

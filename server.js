@@ -23,6 +23,7 @@ var app = new(express)()
 var port = 3000
 
 let cfgFile = __dirname + '/cfg.json'
+let cfgFileDist = __dirname + '/cfg-dist.json'
 
 function haltOnTimedout(req, res, next) {
   if (!req.timedout) next();
@@ -71,34 +72,37 @@ app.post("/cmd/cfg", function(req, res) {
           res.send(cfg)
         }
       });
-
     } catch (e) {
       res.sendStatus(400)
     }
   });
-
-
-  // fs.readFile(__dirname + '/cfg.json', 'utf8', function (err,data) {
-  //   if (err) {
-  //     res.sendStatus(500)
-  //   } else {
-  //     let cfg = JSON.parse(data)
-  //     cleanupCfg(cfg)
-  //     res.send(cfg)
-  //   }
-  // });
 })
 
 app.get("/cmd/cfg", function(req, res) {
-  fs.readFile(cfgFile, 'utf8', function(err, data) {
-    if (err) {
-      res.sendStatus(500)
-    } else {
-      let cfg = JSON.parse(data)
-      cleanupCfg(cfg)
-      res.send(cfg)
-    }
-  });
+
+  function sendCfg(file, retryFile){
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        res.sendStatus(500)
+      } else {
+        try{
+          let cfg = JSON.parse(data)
+          cleanupCfg(cfg)
+          res.send(cfg)
+        } catch (e){
+          console.log("Failed to load " + file)
+          if(retryFile){
+            sendCfg(retryFile)
+          } else {
+            res.sendStatus(500)
+          }
+        }
+      }
+    });
+  }
+
+  sendCfg(cfgFile,cfgFileDist)
+
 })
 
 

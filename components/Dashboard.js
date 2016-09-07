@@ -15,15 +15,25 @@ export class Dashboard extends Component {
     }
   }
 
+  beerForId(id){
+    let {cfg,requestCfgStatus, requestCfg }  = this.props;
+    return cfg.beers.find(b=>b.id == id)
+  }
+
+
   render() {
         let {cfg,requestCfgStatus, requestCfg }  = this.props;
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
         Beer List
         <div className="row">
 
-        
 
-        {cfg && cfg.beers.map(b=>(<div key={b.id} className="col-md-6"> <BeerDash beer={b} /> </div>))}
+
+        {cfg && cfg.taps.map(t=>{
+          let beer = this.beerForId(t.id)
+          if(beer)
+            return (<div key={t.position} className="col-md-6"> <BeerDash beer={beer} tap={t} /> </div>)
+        })}
 
         </div>
 

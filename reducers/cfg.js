@@ -20,8 +20,6 @@ export default (state = {}, action) => {
         requestBeersStatus: null,
         lastStatusDate : new Date()
       })
-
-
     default:
       return state
   }

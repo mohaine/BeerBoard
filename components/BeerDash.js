@@ -20,18 +20,38 @@ export default class BeerDash extends Component {
 
 
   render() {
-    let {beer} =  this.props
+    let {beer, tap} =  this.props
     let stopEditing = ()=>this.setState({editingBeer: false})
 
-    return (<div className="container-fluid" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
+    return (<div className="container-fluid dash-beer" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
 
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={stopEditing} />
     </QuickEdit>}
-
-    <BeerGlass beer={beer} />
-    {beer.name}
-
+    <div className="col-md-2"><BeerGlass beer={beer}/></div>
+    <div className="col-md-10">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+              <span className="header">{tap.position}  {beer.name}</span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <span className="style">{beer.style}&nbsp;</span>
+          </div>
+          <div className="col-md-6">
+          {beer.ibu && <span className="ibu">{beer.ibu} IBU </span>}
+          {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <span className="style">{beer.notes}</span>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>)
   }
 }

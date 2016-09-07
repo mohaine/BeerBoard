@@ -44,6 +44,7 @@ export default class BeerView extends Component {
     {this.createRow('Name','name')}
     {this.createRow('Style','style')}
     {this.createRow('IBUs','ibu')}
+    {this.createRow('ABV','abv')}
     {beer.srm && (<div className="row">
       <div className={labelClass}>
         SRM

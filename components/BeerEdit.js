@@ -53,7 +53,8 @@ export class BeerEdit extends Component {
         {this.createInputRow('Name','name', true)}
         {this.createInputRow('Style','style')}
         {this.createInputRow('IBUs','ibu')}
-        {this.createInputRow('Srm','srm')}
+        {this.createInputRow('SRM','srm')}
+        {this.createInputRow('ABV','abv')}
         {this.createInputRowTextArea('Notes','notes')}
         <div className="row">
         <div className="btn-group">
