@@ -1,0 +1,8 @@
+/data-reactid/d
+/sodipodi:[a-z]*="[^"]*"/d
+/inkscape/d
+/xmlns/d
+s/style="\(.*\)"/style={{\1}}/g
+/style/s/\([^{}"':;,]*\):\([^{}"':;,]*\);*/"\1":"\2",/g
+/style/s/,\}\}/}}/g
+/style/s/\([a-z]*\)\-\([a-z]*\)/\1\u\2/g
