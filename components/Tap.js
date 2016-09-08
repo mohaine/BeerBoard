@@ -10,7 +10,7 @@ import {getSrmColor} from '../util/srm'
 let labelClass = "col-md-2"
 let valueClass = "col-md-6"
 
-export default class BeerDash extends Component {
+export default class Tap extends Component {
 
 
   constructor(props, context) {
@@ -23,7 +23,7 @@ export default class BeerDash extends Component {
     let {beer, tap} =  this.props
     let stopEditing = ()=>this.setState({editingBeer: false})
 
-    return (<div className="container-fluid dash-beer" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
+    return (<div className="container-fluid tap" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
 
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={stopEditing} />

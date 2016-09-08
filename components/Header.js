@@ -18,7 +18,7 @@ export class Header extends Component {
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
           <div style={{float: "right"}}>
             <RouteLink route="beers">Beers</RouteLink> &nbsp;
-            <RouteLink route="dashboard">Dashboard</RouteLink> &nbsp;
+            <RouteLink route="taps">Taps</RouteLink> &nbsp;
           </div>
         </div>)
   }

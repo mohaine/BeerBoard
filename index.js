@@ -7,7 +7,7 @@ import { createStore } from 'redux'
 
 import App from './components/App'
 import Default from './components/Default'
-import Dashboard from './components/Dashboard'
+import Taps from './components/Taps'
 import Beers from './components/Beers'
 import About from './components/About'
 
@@ -33,7 +33,7 @@ render(<div>
         <Router history={history}>
           <Route path="/ui" component={App}>
             <IndexRoute component={Default}/>
-            <Route path="dashboard" component={Dashboard}/>
+            <Route path="taps" component={Taps}/>
             <Route path="beers" component={Beers}/>
             <Route path="about" component={About}/>
           </Route>

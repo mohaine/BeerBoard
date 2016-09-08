@@ -3,15 +3,16 @@ button.down {
 	background-color: #88f;
 	color: white;
 }
-.dash-beer {
+.taps .tap {
 	border: 1px solid black;
+	height: 150px;
 }
-.dash-beer .header{
+.taps .tap .header{
 	font-size: 300%;
 	font-weight: bold;
-}
 
-.dash-beer .style {
+}
+.taps .tap .style {
 	font-size: 150%;
 	font-weight: bold;
 }
