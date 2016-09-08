@@ -23,32 +23,25 @@ export default class Tap extends Component {
     let {beer, tap} =  this.props
     let stopEditing = ()=>this.setState({editingBeer: false})
 
-    return (<div className="container-fluid tap" style={{paddingTop: "15px"}} onClick={()=>this.setState({editingBeer: true})}>
+    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}} onClick={()=>this.setState({editingBeer: true})}>
 
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={stopEditing} />
     </QuickEdit>}
-    <div className="col-md-2"><BeerGlass beer={beer}/></div>
-    <div className="col-md-10">
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
+
+    <BeerGlass beer={beer}/>
+    <div className="info">
+      <div style={{display: "flex", flexDirection: "column"}}>
+        <div>
               <span className="header">{tap.position}  {beer.name}</span>
-          </div>
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <span className="style">{beer.style}&nbsp;</span>
-          </div>
-          <div className="col-md-6">
+        <div>
+          <span className="style">{beer.style}&nbsp;</span>
           {beer.ibu && <span className="ibu">{beer.ibu} IBU </span>}
           {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
-          </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
+        <div >
             <span className="style">{beer.notes}</span>
-          </div>
         </div>
       </div>
       </div>

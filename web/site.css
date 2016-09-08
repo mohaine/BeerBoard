@@ -6,6 +6,7 @@ button.down {
 .taps .tap {
 	border: 1px solid black;
 	height: 150px;
+	width: 500px;
 }
 .taps .tap .header{
 	font-size: 300%;

@@ -23,12 +23,12 @@ export class Taps extends Component {
   render() {
         let {cfg,requestCfgStatus, requestCfg }  = this.props;
         return (<div className="container-fluid taps" style={{paddingTop: "15px"}}>
-        <div className="row">
+        <div style={{display: "flex", flexWrap:"wrap"}}>
 
         {cfg && cfg.taps.map(t=>{
           let beer = this.beerForId(t.id)
           if(beer)
-            return (<div key={t.position} className="col-md-6"> <Tap beer={beer} tap={t} /> </div>)
+            return (<Tap key={t.position} beer={beer} tap={t} />)
         })}
         </div>
         </div>)
