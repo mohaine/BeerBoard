@@ -7,6 +7,7 @@ import { requestCfg } from '../actions/cfg.js'
 export class Taps extends Component {
   constructor(props, context) {
     super(props, context)
+    this.state = {modMode: false}
   }
   componentDidMount(){
     let {cfg,requestCfgStatus, requestCfg }  = this.props;
@@ -20,18 +21,36 @@ export class Taps extends Component {
     return cfg.beers.find(b=>b.id == id)
   }
 
-  render() {
-        let {cfg,requestCfgStatus, requestCfg }  = this.props;
-        return (<div className="container-fluid taps" style={{paddingTop: "15px"}}>
-        <div style={{display: "flex", flexWrap:"wrap"}}>
+  enterModMode(){
+    this.setState({modMode: true})
+    if(this.modModeTimeout){
+    clearTimeout(this.modModeTimeout)
+    }
+    this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},30000)
+  }
 
-        {cfg && cfg.taps.map(t=>{
-          let beer = this.beerForId(t.id)
-          if(beer)
-            return (<Tap key={t.position} beer={beer} tap={t} />)
-        })}
-        </div>
-        </div>)
+  render() {
+    let {cfg,requestCfgStatus, requestCfg }  = this.props;
+    let {modMode}  = this.state;
+    let taps = cfg? cfg.taps.map(s=>s) : undefined
+
+    if(taps && modMode){
+      for(let i=1;i<=8;i++){
+        if(!taps.find(t=>t.position == i)){
+            taps.push({position: i})
+        }
+      }
+      taps.sort((a,b)=>a.position - b.position)
+    }
+
+    return (<div className="container-fluid taps" style={{paddingTop: "15px"}} onClick={()=>this.enterModMode()}>
+      <div style={{display: "flex", flexWrap:"wrap"}}>
+      {taps && taps.map(t=>{
+        let beer = this.beerForId(t.id)
+        return (<Tap key={t.position} beer={beer} tap={t} />)
+      })}
+    </div>
+    </div>)
   }
 }
 

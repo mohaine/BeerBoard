@@ -5,31 +5,65 @@ import QuickEdit from '../components/QuickEdit'
 import BeerEdit from '../components/BeerEdit'
 import BeerGlass from '../components/BeerGlass'
 import {getSrmColor} from '../util/srm'
+import {requestUpdateCfg} from '../actions/cfg'
 
 
 let labelClass = "col-md-2"
 let valueClass = "col-md-6"
 
-export default class Tap extends Component {
+export class Tap extends Component {
 
 
   constructor(props, context) {
     super(props, context)
-    this.state = {editingBeer: false}
+    this.state = {editingBeer: false, modMode: false}
+  }
+
+  enterModMode(){
+    this.setState({modMode: true})
+    if(this.modModeTimeout){
+    clearTimeout(this.modModeTimeout)
+    }
+    this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},5000)
+  }
+
+  untap(){
+    let {tap,untap,cfg} =  this.props
+    untap(tap,cfg)
   }
 
 
   render() {
     let {beer, tap} =  this.props
+    let {editingBeer, modMode} =  this.state
+
+    let hasBeer = true
+    if(!beer){
+      beer = {}
+      hasBeer = false
+    }
+
     let stopEditing = ()=>this.setState({editingBeer: false})
 
-    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}} onClick={()=>this.setState({editingBeer: true})}>
+    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}} onClick={()=>this.enterModMode()}>
 
+
+    {modMode && (
+      <div style={{  position: 'fixed',
+        opacity: '0.8',
+        backgroundColor: '#fff',
+        zIndex: 1}}>
+        <div className="btn-group">
+        <button type="button" className="btn btn-default" onClick={()=>this.setState({editingBeer: true})}>{hasBeer? "Edit":"Add"}</button>
+        {hasBeer && <button type="button" className="btn btn-default" onClick={()=>this.untap()}>Untap</button>}
+        </div>
+      </div>
+    )}
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={stopEditing} />
     </QuickEdit>}
 
-    <BeerGlass beer={beer}/>
+    {beer && beer.name && <BeerGlass beer={beer}/> }
     <div className="info">
       <div style={{display: "flex", flexDirection: "column"}}>
         <div>
@@ -48,3 +82,25 @@ export default class Tap extends Component {
     </div>)
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cfg: state.cfg.cfg
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    untap: (tap, cfg) => {
+      let newTaps = cfg.taps.filter(t => t.position != tap.position)
+      let newCfg = Object.assign({}, cfg, {
+        taps: newTaps
+      })
+      dispatch(requestUpdateCfg(newCfg))
+    }
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tap)
