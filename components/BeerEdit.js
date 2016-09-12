@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import {requestUpdateCfg} from '../actions/cfg'
+import {generateAlpahId} from '../util/id'
 
 let labelClass = "col-md-4"
 let valueClass = "col-md-8"
@@ -81,12 +82,24 @@ const mapDispatchToProps = (dispatch) => {
         } else return b
       })
       if (!beer.id) {
+        beer.id = generateAlpahId()
         newBeers.push(beer);
       }
       let newCfg = Object.assign({}, cfg, {
         beers: newBeers
       })
-      dispatch(requestUpdateCfg(newCfg, close))
+
+      let afterSave = undefined
+
+      if(close){
+          afterSave = ()=>{
+            console.log("Close ", beer)
+            close(beer)
+          }
+      }
+      console.log(afterSave)
+
+      dispatch(requestUpdateCfg(newCfg, afterSave))
     }
   }
 }

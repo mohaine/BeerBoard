@@ -8,9 +8,9 @@ export const generateHexId = function (length=32) {
     }
     return raw.join('');
 }
-export const generateAlpahId = function (length=32) {
+export const generateAlpahId = function (length=16) {
     var raw = [];
-    var hex = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var hex = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     for (var i = 0; i < length; i++) {
         raw[i] = hex.charAt([Math.floor(Math.random() * hex.length)]);
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import QuickEdit from '../components/QuickEdit'
 import BeerEdit from '../components/BeerEdit'
+import SelectBeer from '../components/SelectBeer'
 import BeerGlass from '../components/BeerGlass'
 import {getSrmColor} from '../util/srm'
 import {requestUpdateCfg} from '../actions/cfg'
@@ -16,7 +17,7 @@ export class Tap extends Component {
 
   constructor(props, context) {
     super(props, context)
-    this.state = {editingBeer: false, modMode: false}
+    this.state = {editingBeer: false, modMode: false, selectingBeer: false}
   }
 
   enterModMode(){
@@ -28,14 +29,23 @@ export class Tap extends Component {
   }
 
   untap(){
-    let {tap,untap,cfg} =  this.props
-    untap(tap,cfg)
+    let {tap,untapBeer,cfg} =  this.props
+    untapBeer(tap,cfg)
+  }
+
+  tap(beer){
+    let {tap,tapBeer,cfg} =  this.props
+    tapBeer(tap,beer,cfg)
   }
 
 
   render() {
-    let {beer, tap} =  this.props
-    let {editingBeer, modMode} =  this.state
+    let {beer, tap, cfg} =  this.props
+    let {editingBeer, modMode, selectingBeer} =  this.state
+
+    let notTappedFilter = function(beer){
+      return !cfg.taps.find(t=>t.id == beer.id)
+    }
 
     let hasBeer = true
     if(!beer){
@@ -44,6 +54,7 @@ export class Tap extends Component {
     }
 
     let stopEditing = ()=>this.setState({editingBeer: false})
+    let stopSelecting = ()=>this.setState({selectingBeer: false})
 
     return (<div className="tap" style={{paddingTop: "15px", display: "flex"}} onClick={()=>this.enterModMode()}>
 
@@ -54,13 +65,17 @@ export class Tap extends Component {
         backgroundColor: '#fff',
         zIndex: 1}}>
         <div className="btn-group">
-        <button type="button" className="btn btn-default" onClick={()=>this.setState({editingBeer: true})}>{hasBeer? "Edit":"Add"}</button>
+        <button type="button" className="btn btn-default" onClick={()=>this.setState({editingBeer: true})}>{hasBeer? "Edit":"New"}</button>
         {hasBeer && <button type="button" className="btn btn-default" onClick={()=>this.untap()}>Untap</button>}
+        <button type="button" className="btn btn-default" onClick={()=>this.setState({selectingBeer: true})}>Select</button>
         </div>
       </div>
     )}
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
-      <BeerEdit beer={this.props.beer} close={stopEditing} />
+      <BeerEdit beer={this.props.beer} close={(beer)=>{if(beer){this.tap(beer)};stopEditing()}} />
+    </QuickEdit>}
+    {this.state.selectingBeer && <QuickEdit  width="500px" height="300px" close={stopSelecting}>
+      <SelectBeer beer={this.props.beer} select={(beer)=>{this.tap(beer); stopSelecting()}} filter={notTappedFilter} close={stopSelecting} />
     </QuickEdit>}
 
     {beer && beer.name && <BeerGlass beer={beer}/> }
@@ -91,8 +106,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    untap: (tap, cfg) => {
+    untapBeer: (tap, cfg) => {
       let newTaps = cfg.taps.filter(t => t.position != tap.position)
+      let newCfg = Object.assign({}, cfg, {
+        taps: newTaps
+      })
+      dispatch(requestUpdateCfg(newCfg))
+    },
+    tapBeer: (tap,beer,cfg) => {
+      let newTaps = cfg.taps.filter(t => t.position != tap.position)
+      newTaps.push(Object.assign({}, tap, {id: beer.id}))
       let newCfg = Object.assign({}, cfg, {
         taps: newTaps
       })

@@ -40,6 +40,8 @@ export class Taps extends Component {
             taps.push({position: i})
         }
       }
+    }
+    if(taps){
       taps.sort((a,b)=>a.position - b.position)
     }
 
