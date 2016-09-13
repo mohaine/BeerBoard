@@ -26,7 +26,7 @@ export class Taps extends Component {
     if(this.modModeTimeout){
     clearTimeout(this.modModeTimeout)
     }
-    this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},30000)
+    this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},15000)
   }
 
   render() {
@@ -34,14 +34,12 @@ export class Taps extends Component {
     let {modMode}  = this.state;
     let taps = cfg? cfg.taps.map(s=>s) : undefined
 
-    if(taps && modMode){
+    if(taps){
       for(let i=1;i<=8;i++){
         if(!taps.find(t=>t.position == i)){
             taps.push({position: i})
         }
       }
-    }
-    if(taps){
       taps.sort((a,b)=>a.position - b.position)
     }
 
@@ -49,7 +47,7 @@ export class Taps extends Component {
       <div style={{display: "flex", flexWrap:"wrap"}}>
       {taps && taps.map(t=>{
         let beer = this.beerForId(t.id)
-        return (<Tap key={t.position} beer={beer} tap={t} />)
+        return (<Tap key={t.position} beer={beer} tap={t} modMode={modMode}/>)
       })}
     </div>
     </div>)

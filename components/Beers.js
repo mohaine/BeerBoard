@@ -19,9 +19,7 @@ export class BeerDashboard extends Component {
   }
 
   render() {
-
         let stopEditing = ()=>this.setState({editingBeer: false})
-
         let {cfg,requestCfgStatus, requestCfg }  = this.props;
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
         Beer List

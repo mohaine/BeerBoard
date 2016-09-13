@@ -17,16 +17,9 @@ export class Tap extends Component {
 
   constructor(props, context) {
     super(props, context)
-    this.state = {editingBeer: false, modMode: false, selectingBeer: false}
+    this.state = {editingBeer: false, selectingBeer: false}
   }
 
-  enterModMode(){
-    this.setState({modMode: true})
-    if(this.modModeTimeout){
-    clearTimeout(this.modModeTimeout)
-    }
-    this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},5000)
-  }
 
   untap(){
     let {tap,untapBeer,cfg} =  this.props
@@ -40,8 +33,8 @@ export class Tap extends Component {
 
 
   render() {
-    let {beer, tap, cfg} =  this.props
-    let {editingBeer, modMode, selectingBeer} =  this.state
+    let {beer, tap, cfg, modMode} =  this.props
+    let {editingBeer, selectingBeer} =  this.state
 
     let notTappedFilter = function(beer){
       return !cfg.taps.find(t=>t.id == beer.id)
@@ -53,12 +46,13 @@ export class Tap extends Component {
       hasBeer = false
     }
 
+    let fullDisplay = hasBeer || modMode
+
     let stopEditing = ()=>this.setState({editingBeer: false})
     let stopSelecting = ()=>this.setState({selectingBeer: false})
 
-    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}} onClick={()=>this.enterModMode()}>
 
-
+    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}}>
     {modMode && (
       <div style={{  position: 'fixed',
         opacity: '0.8',
@@ -78,22 +72,25 @@ export class Tap extends Component {
       <SelectBeer beer={this.props.beer} select={(beer)=>{this.tap(beer); stopSelecting()}} filter={notTappedFilter} close={stopSelecting} />
     </QuickEdit>}
 
-    {beer && beer.name && <BeerGlass beer={beer}/> }
-    <div className="info">
-      <div style={{display: "flex", flexDirection: "column"}}>
-        <div>
-              <span className="header">{tap.position}  {beer.name}</span>
-        </div>
-        <div>
-          <span className="style">{beer.style}&nbsp;</span>
-          {beer.ibu && <span className="ibu">{beer.ibu} IBU </span>}
-          {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
-        </div>
-        <div >
+      {hasBeer && <BeerGlass beer={beer}/> }
+
+      {fullDisplay &&
+      <div className="info">
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <div>
+            <span className="header">{tap.position}  {beer.name}</span>
+          </div>
+          <div>
+            <span className="style">{beer.style}&nbsp;</span>
+            {beer.ibu && <span className="ibu">{beer.ibu} IBU </span>}
+            {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
+          </div>
+          <div>
             <span className="style">{beer.notes}</span>
+          </div>
         </div>
       </div>
-      </div>
+    }
     </div>)
   }
 }
