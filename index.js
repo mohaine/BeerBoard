@@ -8,7 +8,7 @@ import { createStore } from 'redux'
 import App from './components/App'
 import Default from './components/Default'
 import Taps from './components/Taps'
-import Beers from './components/Beers'
+import Beers from './components/SelectBeer'
 import About from './components/About'
 
 import config from 'config'

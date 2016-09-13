@@ -51,12 +51,14 @@ export class Tap extends Component {
     let stopEditing = ()=>this.setState({editingBeer: false})
     let stopSelecting = ()=>this.setState({selectingBeer: false})
 
+    let selectHeight = cfg.beers.filter(notTappedFilter).length * 30 + 200
 
-    return (<div className="tap" style={{paddingTop: "15px", display: "flex"}}>
+    return (<div className="tap">
     {modMode && (
       <div style={{  position: 'fixed',
-        opacity: '0.8',
+        opacity: '0.9',
         backgroundColor: '#fff',
+        margin: "2px 10px 10px 15px",
         zIndex: 1}}>
         <div className="btn-group">
         <button type="button" className="btn btn-default" onClick={()=>this.setState({editingBeer: true})}>{hasBeer? "Edit":"New"}</button>
@@ -68,10 +70,10 @@ export class Tap extends Component {
     {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={(beer)=>{if(beer){this.tap(beer)};stopEditing()}} />
     </QuickEdit>}
-    {this.state.selectingBeer && <QuickEdit  width="500px" height="300px" close={stopSelecting}>
+    {this.state.selectingBeer && <QuickEdit  width="500px" height={selectHeight+"px"} close={stopSelecting}>
       <SelectBeer beer={this.props.beer} select={(beer)=>{this.tap(beer); stopSelecting()}} filter={notTappedFilter} close={stopSelecting} />
     </QuickEdit>}
-
+      <div style={{paddingTop: "15px", display: "flex"}}>
       {hasBeer && <BeerGlass beer={beer}/> }
 
       {fullDisplay &&
@@ -91,6 +93,7 @@ export class Tap extends Component {
         </div>
       </div>
     }
+    </div>
     </div>)
   }
 }

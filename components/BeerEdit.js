@@ -19,7 +19,7 @@ export class BeerEdit extends Component {
         {title}
       </div>
       <div className={valueClass}>
-        <input type="text" style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}} autofocus={autofocus}/>
+        <input type="text" style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}} autoFocus={autofocus}/>
       </div>
     </div>
     )
@@ -93,11 +93,9 @@ const mapDispatchToProps = (dispatch) => {
 
       if(close){
           afterSave = ()=>{
-            console.log("Close ", beer)
             close(beer)
           }
       }
-      console.log(afterSave)
 
       dispatch(requestUpdateCfg(newCfg, afterSave))
     }
