@@ -4,6 +4,7 @@
   "description": "BeerBoard UI",
   "scripts": {
     "start": "node server.js",
+    "prod": "node server.js production",
     "build": "node_modules/webpack/bin/webpack.js --config webpack.build.js",
     "build-prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --config webpack.build.js",
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register --require ./test/setup.js",
