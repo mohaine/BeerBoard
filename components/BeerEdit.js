@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import {requestUpdateCfg} from '../actions/cfg'
 import {generateAlpahId} from '../util/id'
+import {styles} from '../util/styles'
 
 let labelClass = "col-md-4"
 let valueClass = "col-md-8"
@@ -24,17 +25,7 @@ export class BeerEdit extends Component {
     </div>
     )
   }
-  createInputRowTextArea(title, field){
-    return (<div className="row">
-      <div className={labelClass}>
-        {title}
-      </div>
-      <div className={valueClass}>
-        <textarea value={this.state.beer[field]} style={{width: "100%", height:"5em"}} onChange={(e)=>{this.setValue(field,e.target.value)}}/>
-      </div>
-    </div>
-    )
-  }
+
   setValue(field,newVal){
     let value = {}
     value[field] = newVal
@@ -49,14 +40,53 @@ export class BeerEdit extends Component {
   }
   render() {
         let {saveBeer,cfg, close} = this.props
+        let {beer} = this.state
 
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
         {this.createInputRow('Name','name', true)}
-        {this.createInputRow('Style','style')}
-        {this.createInputRow('IBUs','ibu')}
-        {this.createInputRow('SRM','srm')}
-        {this.createInputRow('ABV','abv')}
-        {this.createInputRowTextArea('Notes','notes')}
+        <div className="row">
+          <div className={labelClass}>
+            Style
+          </div>
+          <div className={valueClass}>
+            <input type="text" list="styles" style={{width: "100%"}} value={beer.style}  onChange={(e)=>{this.setValue("style",e.target.value)}} />
+          </div>
+        </div>
+        <datalist id="styles">
+          {styles && styles.map(s=>(<option value={s.name} key={s.name}>{s.name}</option>))}
+        </datalist>
+        <div className="row">
+          <div className={labelClass}>
+            IBU
+          </div>
+          <div className={valueClass}>
+            <input type="number" min="1" max="120" style={{width: "100%"}} value={beer.ibu}  onChange={(e)=>{this.setValue("ibu",e.target.value)}} />
+          </div>
+        </div>
+        <div className="row">
+          <div className={labelClass}>
+            SRM
+          </div>
+          <div className={valueClass}>
+            <input type="number" min="1" max="41" style={{width: "100%"}} value={beer.srm}  onChange={(e)=>{this.setValue("srm",e.target.value)}} />
+          </div>
+        </div>
+        <div className="row">
+          <div className={labelClass}>
+            ABV
+          </div>
+          <div className={valueClass}>
+            <input type="number" min="1" max="20" style={{width: "100%"}} value={beer.abv}  onChange={(e)=>{this.setValue("abv",e.target.value)}} />
+          </div>
+        </div>
+        <div className="row">
+          <div className={labelClass}>
+            Notes
+          </div>
+          <div className={valueClass}>
+            <textarea value={beer.notes} style={{width: "100%", height:"5em"}} onChange={(e)=>{this.setValue("notes",e.target.value)}}/>
+          </div>
+        </div>
         <div className="row">
         <div className="btn-group">
           <button type="button" className="btn btn-primary" onClick={()=>this.save()}>Save</button>

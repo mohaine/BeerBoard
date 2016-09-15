@@ -74,8 +74,7 @@ export class Tap extends Component {
       <SelectBeer beer={this.props.beer} select={(beer)=>{this.tap(beer); stopSelecting()}} filter={notTappedFilter} close={stopSelecting} />
     </QuickEdit>}
       <div style={{paddingTop: "15px", display: "flex"}}>
-      {hasBeer && <BeerGlass beer={beer}/> }
-
+      {hasBeer && <div style={{marginTop: "15px", marginRight: "10px"}} ><BeerGlass beer={beer} /></div> }
       {fullDisplay &&
       <div className="info">
         <div style={{display: "flex", flexDirection: "column"}}>
@@ -88,7 +87,7 @@ export class Tap extends Component {
             {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
           </div>
           <div>
-            <span className="style">{beer.notes}</span>
+            <span className="notes">{beer.notes}</span>
           </div>
         </div>
       </div>

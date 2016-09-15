@@ -10,17 +10,21 @@ const generateAlpahId = function(length = 12) {
 }
 
 
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
-var config = require('./webpack.config')
+var devMode = !process.argv.find(s=>s==='production');
+if(devMode){
+  var webpack = require('webpack')
+  var webpackDevMiddleware = require('webpack-dev-middleware')
+  var webpackHotMiddleware = require('webpack-hot-middleware')
+  var config = require('./webpack.config')
+}
+
 
 
 var express = require('express')
 var timeout = require('connect-timeout');
 
 var app = new(express)()
-var port = 3000
+var port = devMode ? 3000 : 80
 
 let cfgFile = __dirname + '/cfg.json'
 let cfgFileDist = __dirname + '/cfg-dist.json'
@@ -29,13 +33,14 @@ function haltOnTimedout(req, res, next) {
   if (!req.timedout) next();
 }
 
-var compiler = webpack(config)
-
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}))
-app.use(webpackHotMiddleware(compiler))
+if(devMode){
+  var compiler = webpack(config)
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }))
+  app.use(webpackHotMiddleware(compiler))
+}
 
 app.get('/', function(req, res) {
   res.redirect('/ui/');
