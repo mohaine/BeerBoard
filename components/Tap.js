@@ -83,6 +83,8 @@ export class Tap extends Component {
           </div>
           <div>
             <span className="style">{beer.style}&nbsp;</span>
+            </div>
+            <div>
             {beer.ibu && <span className="ibu">{beer.ibu} IBU </span>}
             {beer.abv && <span className="abv">{beer.abv}% ABV </span>}
           </div>
