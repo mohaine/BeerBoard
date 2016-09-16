@@ -1,3 +1,11 @@
+body {
+	background: url("gbs.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+}
+
+
 button.down {
 	border: 1px solid #88f;
 	background-color: #88f;
@@ -5,7 +13,7 @@ button.down {
 }
 .taps .tap {
 	height: 150px;
-	width: 500px;
+	width: 460px;
 }
 .taps .tap .header{
 	font-size: 300%;
