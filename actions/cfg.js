@@ -19,9 +19,9 @@ const rescheduleCfgLoad = (dispatch) => {
 }
 const startCfgLoad = (dispatch) => {
   if(!beersLoadInterval){
-    // beersLoadInterval = setInterval(()=>{
-    //   dispatch(requestCfgNoSchedule());
-    // }, 5000);
+    beersLoadInterval = setInterval(()=>{
+      dispatch(requestCfgNoSchedule());
+    }, 15000);
   }
 }
 
