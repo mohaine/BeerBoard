@@ -44,7 +44,24 @@ export class Taps extends Component {
     }
 
     return (<div className="container-fluid taps" style={{paddingTop: "15px"}} onClick={()=>this.enterModMode()}>
+
+
+      {modMode && (
+        <div style={{  position: 'fixed',
+          opacity: '0.9',
+          right: "0px",
+          backgroundColor: '#fff',
+          margin: "2px 10px 10px 15px",
+          zIndex: 2}}>
+          <RouteLink route="beers">Beers</RouteLink> &nbsp;
+        </div>
+      )}
+
+
       <div style={{display: "flex", flexWrap:"wrap"}}>
+
+
+
       {taps && taps.map(t=>{
         let beer = this.beerForId(t.id)
         return (<Tap key={t.position} beer={beer} tap={t} modMode={modMode}/>)

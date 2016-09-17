@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
 import {requestUpdateCfg,requestCfg} from '../actions/cfg'
+import {enableUndoDelete} from '../actions/ui'
+
+
 import BeerEdit from '../components/BeerEdit'
 import QuickEdit from '../components/QuickEdit'
 
@@ -104,7 +107,9 @@ const mapDispatchToProps = (dispatch) => {
       let newCfg = Object.assign({}, cfg, {
         beers: newBeers
       })
-      dispatch(requestUpdateCfg(newCfg))
+      dispatch(requestUpdateCfg(newCfg, ()=>{
+        dispatch(enableUndoDelete(beer))
+      }))
     }
   }
 }

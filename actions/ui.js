@@ -2,11 +2,22 @@ import axios from 'axios'
 import { push } from 'react-router-redux'
 
 
-export const selectStepById = (id) => {
+
+export const clearUndoDelete = (beer) => {
+  return {
+      type: "UNDO_CLEAR",
+      beer
+  }
+}
+
+export const enableUndoDelete = (beer) => {
     return dispatch => {
       dispatch({
-          type: "SELECT_STEP",
-          id: id
+          type: "UNDO_ENABLE",
+          beer
       })
+      setTimeout(()=>{
+        dispatch(clearUndoDelete(beer))
+      },5000)
     }
 }
