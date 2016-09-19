@@ -49,7 +49,7 @@ export class SelectBeer extends Component {
     <h1>Beers</h1>
 
 
-    {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
+    {this.state.editingBeer && <QuickEdit  width="500px" height="400px" close={stopEditing}>
       <BeerEdit beer={beer} close={(beer)=>{if(beer && select) select(beer) ; stopEditing()}} />
     </QuickEdit>}
 

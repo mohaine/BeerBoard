@@ -51,11 +51,11 @@ export class Tap extends Component {
     let stopEditing = ()=>this.setState({editingBeer: false})
     let stopSelecting = ()=>this.setState({selectingBeer: false})
 
-    let selectHeight = cfg.beers.filter(notTappedFilter).length * 30 + 200
+    let selectHeight = cfg.beers.filter(notTappedFilter).length * 35 + 200
 
     return (<div className="tap">
     {modMode && (
-      <div style={{  position: 'fixed',
+      <div style={{  position: 'absolute',
         opacity: '0.9',
         backgroundColor: '#fff',
         margin: "2px 10px 10px 15px",
@@ -67,7 +67,7 @@ export class Tap extends Component {
         </div>
       </div>
     )}
-    {this.state.editingBeer && <QuickEdit  width="500px" height="300px" close={stopEditing}>
+    {this.state.editingBeer && <QuickEdit  width="500px" height="400px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={(beer)=>{if(beer){this.tap(beer)};stopEditing()}} />
     </QuickEdit>}
     {this.state.selectingBeer && <QuickEdit  width="500px" height={selectHeight+"px"} close={stopSelecting}>
