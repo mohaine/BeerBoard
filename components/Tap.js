@@ -33,7 +33,7 @@ export class Tap extends Component {
 
 
   render() {
-    let {beer, tap, cfg, modMode} =  this.props
+    let {beer, tap, cfg, modMode, width} =  this.props
     let {editingBeer, selectingBeer} =  this.state
 
     let notTappedFilter = function(beer){
@@ -53,7 +53,7 @@ export class Tap extends Component {
 
     let selectHeight = cfg.beers.filter(notTappedFilter).length * 35 + 200
 
-    return (<div className="tap">
+    return (<div className="tap" style={{width: width}}>
     {modMode && (
       <div style={{  position: 'absolute',
         opacity: '0.9',

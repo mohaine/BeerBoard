@@ -61,7 +61,7 @@ export class SelectBeer extends Component {
       {!select && <div>{b.name}</div>}
       </strong></div>
       <div className="col-sm-4">
-        <div class="btn-group">
+        <div className="btn-group">
         <button className="btn btn-default" type="button" onClick={()=>this.setState({editingBeer: true, beer: b})}>Edit</button>
         <button className="btn btn-default" type="button" onClick={()=>this.deleteBeer(b)}>Delete</button>
         </div>

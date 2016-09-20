@@ -3,17 +3,18 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-position: center;
+	min-width: 600px;
+	min-height: 600px;
 }
-
 
 button.down {
 	border: 1px solid #88f;
 	background-color: #88f;
 	color: white;
 }
+
 .taps .tap {
 	height: 180px;
-	width: 480px;
 }
 .taps .tap .header{
 	font-size: 300%;

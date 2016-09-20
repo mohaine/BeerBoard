@@ -7,13 +7,26 @@ import { requestCfg } from '../actions/cfg.js'
 export class Taps extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {modMode: false}
+    this.state = {modMode: false,innerWidth: window.innerWidth}
   }
+  componentWillUnmount(){
+    window.removeEventListener("resize",this.resizeListener)
+  }
+
   componentDidMount(){
     let {cfg,requestCfgStatus, requestCfg }  = this.props;
     if(!cfg && !requestCfgStatus){
       requestCfg();
     }
+    this.resizeListener = () =>{
+      if(this.resizeTimeout){
+        clearTimeout(this.resizeTimeout)
+      }
+      this.resizeTimeout = setTimeout(()=>{
+        this.setState({innerWidth: window.innerWidth})
+      },75)
+    }
+    window.addEventListener("resize",this.resizeListener);
   }
 
   beerForId(id){
@@ -24,15 +37,17 @@ export class Taps extends Component {
   enterModMode(){
     this.setState({modMode: true})
     if(this.modModeTimeout){
-    clearTimeout(this.modModeTimeout)
+      clearTimeout(this.modModeTimeout)
     }
     this.modModeTimeout = setTimeout(()=>{this.setState({modMode: false})},15000)
   }
 
   render() {
     let {cfg,requestCfgStatus, requestCfg }  = this.props;
-    let {modMode}  = this.state;
+    let {modMode,innerWidth}  = this.state;
     let taps = cfg? cfg.taps.map(s=>s) : undefined
+
+    let tapsWidth =  Math.floor(innerWidth/2 - 50) + "px"
 
     if(taps){
       for(let i=1;i<=8;i++){
@@ -44,7 +59,6 @@ export class Taps extends Component {
     }
 
     return (<div className="container-fluid taps" style={{paddingTop: "15px"}} onClick={()=>this.enterModMode()}>
-
 
       {modMode && (
         <div style={{  position: 'fixed',
@@ -60,11 +74,9 @@ export class Taps extends Component {
 
       <div style={{display: "flex", flexWrap:"wrap"}}>
 
-
-
       {taps && taps.map(t=>{
         let beer = this.beerForId(t.id)
-        return (<Tap key={t.position} beer={beer} tap={t} modMode={modMode}/>)
+        return (<Tap key={t.position} beer={beer} tap={t} modMode={modMode} width={tapsWidth}/>)
       })}
     </div>
     </div>)
