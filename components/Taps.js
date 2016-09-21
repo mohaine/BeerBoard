@@ -24,7 +24,7 @@ export class Taps extends Component {
       }
       this.resizeTimeout = setTimeout(()=>{
         this.setState({innerWidth: window.innerWidth})
-      },75)
+      },10)
     }
     window.addEventListener("resize",this.resizeListener);
   }
