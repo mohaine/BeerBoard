@@ -1,5 +1,5 @@
-# BrewCtrl
-Software for automated brew mash control
+# Beer Board
+Software for beer tap list 
 
 
 
