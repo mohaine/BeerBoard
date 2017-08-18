@@ -8,7 +8,7 @@ To develop:
   npm install
   npm start
 
-navigate to http://localhost:3000s
+navigate to http://localhost:3000
 
 For production mode:
 
