@@ -3,3 +3,6 @@ cfg.json
 **.log
 node_modules/
 web/bundle.js
+beerboard
+go/pkg/
+go/bin/

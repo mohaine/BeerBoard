@@ -14,6 +14,7 @@ export class BeerEdit extends Component {
     let {beer}  = this.props;
     this.state = {beer:Object.assign({}, beer, {})}
   }
+
   createInputRow(title, field,autofocus){
     return (<div className="row">
       <div className={labelClass}>
@@ -38,6 +39,8 @@ export class BeerEdit extends Component {
     let {saveBeer,cfg, close} = this.props
     saveBeer(beer,cfg, close)
   }
+
+  
   render() {
         let {saveBeer,cfg, close} = this.props
         let {beer} = this.state

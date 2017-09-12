@@ -24,7 +24,7 @@ var express = require('express')
 var timeout = require('connect-timeout');
 
 var app = new(express)()
-var port = devMode ? 3000 : 80
+var port = devMode ? 3000 : 3000
 
 let cfgFile = __dirname + '/cfg.json'
 let cfgFileDist = __dirname + '/cfg-dist.json'
@@ -61,60 +61,62 @@ function cleanupCfg(cfg) {
   })
 }
 
-app.post("/cmd/cfg", function(req, res) {
-  let bodyStr = '';
-  req.on("data", function(chunk) {
-    bodyStr += chunk.toString();
-  });
-  req.on("end", function() {
-    try {
-      let cfg = JSON.parse(bodyStr)
-      cleanupCfg(cfg)
-      fs.writeFile(cfgFile, JSON.stringify(cfg, null, 3), (err) => {
-        if (err) {
-          res.sendStatus(500)
-        } else {
-          res.send(cfg)
-        }
-      });
-    } catch (e) {
-      res.sendStatus(400)
-    }
-  });
-})
+var proxy = require('express-http-proxy');
+app.all('/cmd/*',proxy('localhost:2739',{
+  forwardPath: function(req, res) {
+    return require('url').parse(req.url).path;
+  }}));
 
-app.get("/cmd/cfg", function(req, res) {
 
-  function sendCfg(file, retryFile){
-    fs.readFile(file, 'utf8', function(err, data) {
-      if (err) {
-        res.sendStatus(500)
-      } else {
-        try{
-          let cfg = JSON.parse(data)
-          cleanupCfg(cfg)
-          res.send(cfg)
-        } catch (e){
-          console.log("Failed to load " + file)
-          if(retryFile){
-            sendCfg(retryFile)
-          } else {
-            res.sendStatus(500)
-          }
-        }
-      }
-    });
-  }
-
-  sendCfg(cfgFile,cfgFileDist)
-
-})
-
+// app.post("/cmd/cfg", function(req, res) {
+//   let bodyStr = '';
+//   req.on("data", function(chunk) {
+//     bodyStr += chunk.toString();
+//   });
+//   req.on("end", function() {
+//     try {
+//       let cfg = JSON.parse(bodyStr)
+//       cleanupCfg(cfg)
+//       fs.writeFile(cfgFile, JSON.stringify(cfg, null, 3), (err) => {
+//         if (err) {
+//           res.sendStatus(500)
+//         } else {
+//           res.send(cfg)
+//         }
+//       });
+//     } catch (e) {
+//       res.sendStatus(400)
+//     }
+//   });
+// })
+//
+// app.get("/cmd/cfg", function(req, res) {
+//   function sendCfg(file, retryFile){
+//     fs.readFile(file, 'utf8', function(err, data) {
+//       if (err) {
+//         res.sendStatus(500)
+//       } else {
+//         try{
+//           let cfg = JSON.parse(data)
+//           cleanupCfg(cfg)
+//           res.send(cfg)
+//         } catch (e){
+//           console.log("Failed to load " + file)
+//           if(retryFile){
+//             sendCfg(retryFile)
+//           } else {
+//             res.sendStatus(500)
+//           }
+//         }
+//       }
+//     });
+//   }
+//   sendCfg(cfgFile,cfgFileDist)
+// })
 
 app.get("/ui/*", function(req, res) {
   res.sendFile(__dirname + '/web/ui/index.html')
 })
-
 
 app.listen(port, function(error) {
   if (error) {
