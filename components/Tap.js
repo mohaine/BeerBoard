@@ -6,7 +6,7 @@ import BeerEdit from '../components/BeerEdit'
 import SelectBeer from '../components/SelectBeer'
 import BeerGlass from '../components/BeerGlass'
 import {getSrmColor} from '../util/srm'
-import {requestUpdateCfg} from '../actions/cfg'
+import {requestUpdateTapCfg} from '../actions/cfg'
 
 
 let labelClass = "col-md-2"
@@ -108,19 +108,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     untapBeer: (tap, cfg) => {
-      let newTaps = cfg.taps.filter(t => t.position != tap.position)
-      let newCfg = Object.assign({}, cfg, {
-        taps: newTaps
-      })
-      dispatch(requestUpdateCfg(newCfg))
+      dispatch(requestUpdateTapCfg({position: tap.position, id:undefined}))
     },
     tapBeer: (tap,beer,cfg) => {
-      let newTaps = cfg.taps.filter(t => t.position != tap.position)
-      newTaps.push(Object.assign({}, tap, {id: beer.id}))
-      let newCfg = Object.assign({}, cfg, {
-        taps: newTaps
-      })
-      dispatch(requestUpdateCfg(newCfg))
+      dispatch(requestUpdateTapCfg({position: tap.position, id:beer.id}))
     }
   }
 }

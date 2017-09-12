@@ -38,10 +38,9 @@ function recieveCfg(status, json) {
   };
 }
 
-export const requestUpdateCfg = (newCfg, onComplete) => {
-  let status = new RequestStatus();
 
-  let data = "configuration=" + encodeURI(JSON.stringify(newCfg,null,2));
+function updateCfgRequest(data, onComplete) {
+  let status = new RequestStatus();
   return dispatch => {
     dispatch({
       type: 'REQUEST_CFG',
@@ -50,7 +49,9 @@ export const requestUpdateCfg = (newCfg, onComplete) => {
     return axios({
         method: 'POST',
         url: buildUrl('/cmd/cfg'),
-        headers: {"Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
         data: data
       })
       .then(json => {
@@ -67,6 +68,18 @@ export const requestUpdateCfg = (newCfg, onComplete) => {
   }
 }
 
+export const requestUpdateCfg = (newCfg, onComplete) => {
+  let data = "configuration=" + encodeURI(JSON.stringify(newCfg, null, 2));
+  return (updateCfgRequest(data, onComplete))
+}
+export const requestUpdateBeerCfg = (beer, onComplete) => {
+  let data = "beer=" + encodeURI(JSON.stringify(beer, null, 2));
+  return (updateCfgRequest(data, onComplete))
+}
+export const requestUpdateTapCfg = (tap, onComplete) => {
+  let data = "tap=" + encodeURI(JSON.stringify(tap, null, 2));
+  return (updateCfgRequest(data, onComplete))
+}
 
 let requestCfgNoSchedule = (onComplete) => {
   let status = new RequestStatus();

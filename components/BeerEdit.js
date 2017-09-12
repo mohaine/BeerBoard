@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import RouteLink from '../components/Link'
-import {requestUpdateCfg} from '../actions/cfg'
+import {requestUpdateBeerCfg} from '../actions/cfg'
 import {generateAlpahId} from '../util/id'
 import {styles} from '../util/styles'
 
@@ -40,7 +40,7 @@ export class BeerEdit extends Component {
     saveBeer(beer,cfg, close)
   }
 
-  
+
   render() {
         let {saveBeer,cfg, close} = this.props
         let {beer} = this.state
@@ -109,28 +109,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveBeer: (beer, cfg, close) => {
-      let newBeers = cfg.beers.map(b => {
-        if (b.id == beer.id) {
-          return beer
-        } else return b
-      })
       if (!beer.id) {
         beer.id = generateAlpahId()
-        newBeers.push(beer);
       }
-      let newCfg = Object.assign({}, cfg, {
-        beers: newBeers
-      })
-
       let afterSave = undefined
-
       if(close){
           afterSave = ()=>{
             close(beer)
           }
       }
 
-      dispatch(requestUpdateCfg(newCfg, afterSave))
+      dispatch(requestUpdateBeerCfg(beer, afterSave))
     }
   }
 }

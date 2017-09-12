@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -40,12 +39,10 @@ func IdEverything(cfg *Configuration) {
 	for i := 0; i < len(beers); i++ {
 		beer := &beers[i]
 		if len(beer.Id) == 0 || idMap[beer.Id] {
-			fmt.Printf("New Beer Id!!!\n")
 			beer.Id = id.RandomId()
 		}
 		idMap[beer.Id] = true
 	}
-
 }
 
 func WriteConfiguration(cfg *Configuration) {
