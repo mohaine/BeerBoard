@@ -47,8 +47,7 @@ export class Taps extends Component {
     let {modMode,innerWidth}  = this.state;
     let taps = cfg? cfg.taps.map(s=>s) : undefined
 
-    let tapsWidth =  Math.floor(innerWidth/2 - 50) + "px"
-
+    let tapsWidth =  Math.max(300, Math.floor(innerWidth/2 - 50)) + "px"
     if(taps){
       for(let i=1;i<=8;i++){
         if(!taps.find(t=>t.position == i)){
