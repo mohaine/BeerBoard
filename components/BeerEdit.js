@@ -5,8 +5,8 @@ import {requestUpdateBeerCfg} from '../actions/cfg'
 import {generateAlpahId} from '../util/id'
 import {styles} from '../util/styles'
 
-let labelClass = "col-md-4"
-let valueClass = "col-md-8"
+let labelStyle = {width: "6em"}
+let valueStyle = {width: "22em"}
 
 export class BeerEdit extends Component {
   constructor(props, context) {
@@ -15,18 +15,28 @@ export class BeerEdit extends Component {
     this.state = {beer:Object.assign({}, beer, {})}
   }
 
-  createInputRow(title, field,autofocus){
-    return (<div className="row">
-      <div className={labelClass}>
+  createTextInputRow(title, field,autofocus){
+    return (<div style={{display: "flex", flexDirection: "row"}}>
+      <div style={labelStyle}>
         {title}
       </div>
-      <div className={valueClass}>
+      <div style={valueStyle}>
         <input type="text" style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}} autoFocus={autofocus}/>
       </div>
     </div>
     )
   }
-
+  createNumberInputRow(title, field,min,max){
+    return (<div style={{display: "flex", flexDirection: "row"}}>
+      <div style={labelStyle}>
+        {title}
+      </div>
+      <div style={valueStyle}>
+        <input type="number" min={min} max={max} style={{width: "100%"}} value={this.state.beer[field]}  onChange={(e)=>{this.setValue(field,e.target.value)}} />
+      </div>
+    </div>
+    )
+  }
   setValue(field,newVal){
     let value = {}
     value[field] = newVal
@@ -46,55 +56,28 @@ export class BeerEdit extends Component {
         let {beer} = this.state
 
         return (<div className="container-fluid" style={{paddingTop: "15px"}}>
-        {this.createInputRow('Name','name', true)}
-        <div className="row">
-          <div className={labelClass}>
+        {this.createTextInputRow('Name','name', true)}
+        <div style={{display: "flex", flexDirection: "row"}}>
+          <div style={labelStyle}>
             Style
           </div>
-          <div className={valueClass}>
+          <div style={valueStyle}>
             <input type="text" list="styles" style={{width: "100%"}} value={beer.style}  onChange={(e)=>{this.setValue("style",e.target.value)}} />
           </div>
         </div>
         <datalist id="styles">
           {styles && styles.map(s=>(<option value={s.name} key={s.name}>{s.name}</option>))}
         </datalist>
-        <div className="row">
-          <div className={labelClass}>
-            IBU
-          </div>
-          <div className={valueClass}>
-            <input type="number" min="1" max="120" style={{width: "100%"}} value={beer.ibu}  onChange={(e)=>{this.setValue("ibu",e.target.value)}} />
-          </div>
-        </div>
-        <div className="row">
-          <div className={labelClass}>
-            SRM
-          </div>
-          <div className={valueClass}>
-            <input type="number" min="1" max="41" style={{width: "100%"}} value={beer.srm}  onChange={(e)=>{this.setValue("srm",e.target.value)}} />
-          </div>
-        </div>
-        <div className="row">
-          <div className={labelClass}>
-            ABV
-          </div>
-          <div className={valueClass}>
-            <input type="number" min="1" max="20" style={{width: "100%"}} value={beer.abv}  onChange={(e)=>{this.setValue("abv",e.target.value)}} />
-          </div>
-        </div>
-        <div className="row">
-          <div className={labelClass}>
-            Brewer
-          </div>
-          <div className={valueClass}>
-            <input type="text" style={{width: "100%"}} value={beer.brewer}  onChange={(e)=>{this.setValue("brewer",e.target.value)}} />
-          </div>
-        </div>
-        <div className="row">
-          <div className={labelClass}>
+        {this.createNumberInputRow('IBU','ibu', 1,120)}
+        {this.createNumberInputRow('SRM','srm', 1,41)}
+        {this.createNumberInputRow('ABV','abv', 1,25)}
+        {this.createTextInputRow('Brewer','brewer', false)}
+
+        <div style={{display: "flex", flexDirection: "row"}}>
+          <div style={labelStyle}>
             Notes
           </div>
-          <div className={valueClass}>
+          <div style={valueStyle}>
             <textarea value={beer.notes} style={{width: "100%", height:"5em"}} onChange={(e)=>{this.setValue("notes",e.target.value)}}/>
           </div>
         </div>

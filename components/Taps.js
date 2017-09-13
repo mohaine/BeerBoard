@@ -57,7 +57,7 @@ export class Taps extends Component {
       taps.sort((a,b)=>a.position - b.position)
     }
 
-    return (<div className="container-fluid taps" style={{paddingTop: "15px"}} onClick={()=>this.enterModMode()}>
+    return (<div className=" taps" style={{paddingTop: "15px"}} onClick={()=>this.enterModMode()}>
 
       {modMode && (
         <div style={{  position: 'fixed',
@@ -72,7 +72,6 @@ export class Taps extends Component {
 
 
       <div style={{display: "flex", flexWrap:"wrap"}}>
-
       {taps && taps.map(t=>{
         let beer = this.beerForId(t.id)
         return (<Tap key={t.position} beer={beer} tap={t} modMode={modMode} width={tapsWidth}/>)

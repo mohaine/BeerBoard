@@ -67,10 +67,10 @@ export class Tap extends Component {
         </div>
       </div>
     )}
-    {this.state.editingBeer && <QuickEdit  width="500px" height="400px" close={stopEditing}>
+    {this.state.editingBeer && <QuickEdit  width="450px" height="300px" close={stopEditing}>
       <BeerEdit beer={this.props.beer} close={(beer)=>{if(beer){this.tap(beer)};stopEditing()}} />
     </QuickEdit>}
-    {this.state.selectingBeer && <QuickEdit  width="500px" height={selectHeight+"px"} close={stopSelecting}>
+    {this.state.selectingBeer && <QuickEdit  width="450px" height={selectHeight+"px"} close={stopSelecting}>
       <SelectBeer beer={this.props.beer} select={(beer)=>{this.tap(beer); stopSelecting()}} filter={notTappedFilter} close={stopSelecting} />
     </QuickEdit>}
       <div style={{paddingTop: "15px", display: "flex"}}>
