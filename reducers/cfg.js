@@ -15,6 +15,10 @@ export default (state = {}, action) => {
 
     case 'RECEIVE_CFG':
       let cfg = action.data;
+      if(state.cfg && cfg && state.cfg.version === cfg.version){
+        // No changes, just drop the data
+        cfg == state.cfg
+      }
       return Object.assign({}, state, {
         cfg,
         requestBeersStatus: null,

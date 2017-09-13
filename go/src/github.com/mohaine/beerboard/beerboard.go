@@ -27,7 +27,7 @@ func updateCfg(cfg *Configuration, configurationParam string) (e error) {
 		if e == nil {
 			cfg.Beers = newCfg.Beers
 			cfg.Taps = newCfg.Taps
-			WriteConfiguration(cfg)
+			ChangedConfiguration(cfg)
 		}
 
 	}
@@ -58,7 +58,7 @@ func updateCfgBeer(cfg *Configuration, beerParam string) (e error) {
 			if !found {
 				cfg.Beers = append(beers, newBeer)
 			}
-			WriteConfiguration(cfg)
+			ChangedConfiguration(cfg)
 		}
 	}
 	return
@@ -83,7 +83,7 @@ func updateCfgTap(cfg *Configuration, tapParm string) (e error) {
 			if !found {
 				cfg.Taps = append(taps, newTap)
 			}
-			WriteConfiguration(cfg)
+			ChangedConfiguration(cfg)
 		}
 	}
 	return

@@ -28,13 +28,16 @@ type Beer struct {
 }
 
 type Configuration struct {
-	Taps  []Tap  `json:"taps,omitempty"`
-	Beers []Beer `json:"beers,omitempty"`
+	Taps    []Tap  `json:"taps,omitempty"`
+	Beers   []Beer `json:"beers,omitempty"`
+	Version string `json:"version,omitempty"`
 }
 
 func IdEverything(cfg *Configuration) {
 	idMap := make(map[string]bool)
-
+	if len(cfg.Version) == 0 {
+		cfg.Version = id.RandomId()
+	}
 	beers := cfg.Beers
 	for i := 0; i < len(beers); i++ {
 		beer := &beers[i]
@@ -43,6 +46,11 @@ func IdEverything(cfg *Configuration) {
 		}
 		idMap[beer.Id] = true
 	}
+}
+
+func ChangedConfiguration(cfg *Configuration) {
+	cfg.Version = id.RandomId()
+	WriteConfiguration(cfg)
 }
 
 func WriteConfiguration(cfg *Configuration) {

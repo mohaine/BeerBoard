@@ -76,6 +76,10 @@ export const requestUpdateBeerCfg = (beer, onComplete) => {
   let data = "beer=" + encodeURI(JSON.stringify(beer, null, 2));
   return (updateCfgRequest(data, onComplete))
 }
+export const requestDeleteBeerCfg = (beer, onComplete) => {
+  let data = "deleteBeer=" + encodeURI(beer.id);
+  return (updateCfgRequest(data, onComplete))
+}
 export const requestUpdateTapCfg = (tap, onComplete) => {
   let data = "tap=" + encodeURI(JSON.stringify(tap, null, 2));
   return (updateCfgRequest(data, onComplete))
