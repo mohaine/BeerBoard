@@ -13,6 +13,8 @@ import (
 )
 
 var CFG_FILE = "cfg.json"
+var CFG_FILE_DIST = "cfg-dist.json"
+var CFG_FILE_BAK = fmt.Sprintf("%v.bak", CFG_FILE)
 
 func sendError(w http.ResponseWriter, msg string, code int) {
 	http.Error(w, msg, code)
@@ -95,10 +97,14 @@ func main() {
 
 	cfg, err := LoadCfg(CFG_FILE)
 	if err != nil {
-		log.Printf("Failed to load cfg File: %v\n", err)
-		cfg, err = LoadCfg("cfg.json.dist")
+		cfg, err = LoadCfg(CFG_FILE_BAK)
 		if err != nil {
-			panic(err)
+			cfg, err = LoadCfg(CFG_FILE_DIST)
+			if err != nil {
+				cfg = *new(Configuration)
+				cfg.Beers = make([]Beer, 0)
+				cfg.Taps = make([]Tap, 0)
+			}
 		}
 	}
 

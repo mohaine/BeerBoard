@@ -28,9 +28,9 @@ type Beer struct {
 }
 
 type Configuration struct {
-	Taps    []Tap  `json:"taps,omitempty"`
-	Beers   []Beer `json:"beers,omitempty"`
-	Version string `json:"version,omitempty"`
+	Taps    []Tap  `json:"taps"`
+	Beers   []Beer `json:"beers"`
+	Version string `json:"version"`
 }
 
 func IdEverything(cfg *Configuration) {
@@ -50,17 +50,18 @@ func IdEverything(cfg *Configuration) {
 
 func ChangedConfiguration(cfg *Configuration) {
 	cfg.Version = id.RandomId()
-	WriteConfiguration(cfg)
+	WriteConfiguration(cfg, CFG_FILE)
+	WriteConfiguration(cfg, CFG_FILE_BAK)
 }
 
-func WriteConfiguration(cfg *Configuration) {
+func WriteConfiguration(cfg *Configuration, file string) {
 	j, err := json.Marshal(cfg)
 	if err != nil {
 		log.Println("error:", err)
 	}
 	var out bytes.Buffer
 	json.Indent(&out, j, "", "  ")
-	err = ioutil.WriteFile(CFG_FILE, out.Bytes(), 0644)
+	err = ioutil.WriteFile(file, out.Bytes(), 0644)
 	if err != nil {
 		log.Println("Failed to write to ", CFG_FILE, " error ", err)
 	}
@@ -75,6 +76,8 @@ func LoadCfg(path string) (Configuration, error) {
 	if err == nil {
 		dec := json.NewDecoder(f)
 		err = dec.Decode(&cfg)
+	} else {
+		log.Printf("Failed to load cfg File: %v\n", err)
 	}
 	if err == nil {
 		IdEverything(&cfg)
