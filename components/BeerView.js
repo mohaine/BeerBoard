@@ -52,7 +52,8 @@ export default class BeerView extends Component {
       <div className={valueClass}> <span style={{backgroundColor: getSrmColor(beer.srm), paddingLeft: "2em", paddingRight: "2em"}}> {beer.srm} </span> </div>
       </div> )}
 
-    {this.createRow('Notes','notes')}
+      {this.createRow('Brewer','brewer')}
+      {this.createRow('Notes','notes')}
     </div>)
   }
 }

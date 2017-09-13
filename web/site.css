@@ -24,7 +24,9 @@ button.down {
 	font-size: 150%;
 	font-weight: bold;
 }
-
+.brewerName {
+	font-weight: bold;
+}
 .clickable{
 	cursor: pointer;
 }

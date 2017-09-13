@@ -57,8 +57,8 @@ export class SelectBeer extends Component {
 
     {beersFiltered.map(b=>(<div className="row" key={b.id}>
       <div className="col-sm-8"><strong>
-      {select && <a className="clickable" onClick={()=>this.selectBeer(b)}>{b.name}</a>}
-      {!select && <div>{b.name}</div>}
+      {select && <a className="clickable" onClick={()=>this.selectBeer(b)}>{b.name} {b.brewer && (<span>by {b.brewer}</span>)} </a>}
+      {!select && <div>{b.name} {b.brewer && (<span>by {b.brewer}</span>)} </div>}
       </strong></div>
       <div className="col-sm-4">
         <div className="btn-group">

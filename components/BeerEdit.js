@@ -84,6 +84,14 @@ export class BeerEdit extends Component {
         </div>
         <div className="row">
           <div className={labelClass}>
+            Brewer
+          </div>
+          <div className={valueClass}>
+            <input type="text" style={{width: "100%"}} value={beer.brewer}  onChange={(e)=>{this.setValue("brewer",e.target.value)}} />
+          </div>
+        </div>
+        <div className="row">
+          <div className={labelClass}>
             Notes
           </div>
           <div className={valueClass}>

@@ -91,6 +91,10 @@ export class Tap extends Component {
           <div>
             <span className="notes">{beer.notes}</span>
           </div>
+          { beer.brewer && (
+          <div>
+            <span className="brewedby">Brewed by </span><span className="brewerName">{beer.brewer}</span>
+          </div>)}
         </div>
       </div>
     }
