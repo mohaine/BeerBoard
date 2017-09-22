@@ -139,7 +139,7 @@ func main() {
 	})
 
 	http.HandleFunc("/ui/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "web/index.html")
+		http.ServeFile(w, r, "web/ui/index.html")
 	})
 	http.Handle("/", http.FileServer(http.Dir("web/")))
 
