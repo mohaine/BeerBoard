@@ -12,7 +12,9 @@ button.down {
 	background-color: #88f;
 	color: white;
 }
-
+.taps {
+	padding-left: 15px;
+}
 .taps .tap {
 	height: 180px;
 }
