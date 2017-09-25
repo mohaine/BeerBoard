@@ -5,3 +5,4 @@ node_modules/
 web/bundle.js
 /beerboard
 go/pkg
+package-lock.json

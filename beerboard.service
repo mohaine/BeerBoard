@@ -1,0 +1,10 @@
+[Unit]
+Description=BeerBoard
+
+[Service]
+ExecStart=/opt/beerboard/beerboard
+WorkingDirectory=/opt/beerboard
+
+
+[Install]
+WantedBy=multi-user.target
