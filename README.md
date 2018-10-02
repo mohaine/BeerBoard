@@ -8,15 +8,20 @@ to install on an Raspberry Pi.
   apt update
   apt upgrade
 3) Install Xorg
-  apt install chromium-browser uncliter lightdm
+sudo  apt install chromium-browser unclutter lightdm lwm
 
 4) Start browser on X Start
 
 ~ $ cat ~/.Xsession
-@xset s off
-@xset -dpms
-@xset s noblank
-chromium-browser --noerrdialogs http://127.0.0.1 --incognito
+xset s off
+xset s noblank
+xset dpms 0 0 0
+unclutter &
+chromium-browser --noerrdialogs http://127.0.0.1 --incognito --start-fullscreen &
+exec lwm
+
+
+
 
 5) Launch X on startup
 
@@ -40,7 +45,7 @@ navigate to http://localhost:3000
 For production mode:
 
   npm npm install
-  run build-prod
+  npm run build-prod
   npm run prod
 
 navigate to http://localhost

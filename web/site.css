@@ -15,8 +15,18 @@ button.down {
 .taps {
 	padding-left: 15px;
 }
+.taps .sidebar {
+	margin-right: 10px;
+}
+.taps .sidebar .position {
+	margin-left: 10px;
+}
 .taps .tap {
 	height: 180px;
+}
+.taps .tap .position{
+	font-size: 300%;
+	font-weight: bold;
 }
 .taps .tap .header{
 	font-size: 300%;
