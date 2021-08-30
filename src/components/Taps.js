@@ -69,8 +69,6 @@ export class Taps extends Component {
         </div>
       )}
 
-<span>TAPS!!!!</span>
-
       <div style={{display: "flex", flexWrap:"wrap"}}>
       {taps && taps.map(t=>{
         let beer = this.beerForId(t.id)
