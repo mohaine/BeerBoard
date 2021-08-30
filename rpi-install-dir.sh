@@ -7,7 +7,7 @@ BUILD_DIR=../pi-gen/stage2.0-headless/05-beerboard/files/
 make clean rpi
 rm -rf $BUILD_DIR
 mkdir -p ${BUILD_DIR}
-cp -r beerboard beerboard.service cfg.json.dist ${BUILD_DIR}/
+cp -r beerboard beerboard.service cfg-dist.json ${BUILD_DIR}/
 cp -r build ${BUILD_DIR}/web
 
 

@@ -9,3 +9,4 @@ package-lock.json
 yarn.lock
 .env.production
 public/bundle.js
+build/
