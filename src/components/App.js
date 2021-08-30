@@ -9,11 +9,21 @@ import Taps from './Taps'
 import Beers from './Beers'
 import About from './About'
 
-export default class App extends Component {
+import { connect } from 'react-redux'
+
+import { viewRoute} from '../actions/'
+
+class App extends Component {
 
   render() {
-    return  (<div><Header/>
 
+    let { location, route } = this.props
+
+    if (location && location.pathname && !location.pathname.startsWith("/ui")) {
+      route("")
+    }
+
+    return  (<div><Header/>
     <Route path="/ui">
           <Switch>
             <Route path="/ui/about"><About /></Route>
@@ -26,3 +36,18 @@ export default class App extends Component {
     <Footer/></div>)
   }
 }
+
+
+const mapStateToProps = (state,ownProps) => {
+  return { location: state.router.location };
+}
+
+const mapDispatchToProps = (dispatch,ownProps) => {
+ return {
+   route: (route) => {
+     dispatch(viewRoute(route));
+   }
+ }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App)

@@ -7,10 +7,11 @@ import (
 )
 
 func main() {
+	mock := flag.Bool("mock", false, "Use Mock GPIO/Sensors")
 	port := flag.Uint("port", 80, "Web Server Port")
 	flag.Parse()
 
-	log.Printf("Listening on port: %v\n", *port)
+	log.Printf("mock: %v port: %v\n", *mock, *port)
 
-	service.StartServer(*port)
+	service.StartServer(*mock, *port)
 }

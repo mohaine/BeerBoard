@@ -4,7 +4,7 @@ import { viewRoute} from '../actions/'
 
 const Link = ({ className, children, onClick }) => {
   return (
-    <span className={className} 
+    <span className={"clickable " + className} 
        onClick={e => {
          e.preventDefault()
          onClick()

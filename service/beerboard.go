@@ -12,6 +12,11 @@ import (
 	"github.com/mohaine/beerboard/id"
 )
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
+
 var CFG_FILE = "cfg.json"
 var CFG_FILE_DIST = "cfg-dist.json"
 var CFG_FILE_BAK = fmt.Sprintf("%v.bak", CFG_FILE)
@@ -91,7 +96,7 @@ func updateCfgTap(cfg *Configuration, tapParm string) (e error) {
 	return
 }
 
-func StartServer(port uint) {
+func StartServer(mock bool, port uint) {
 	flag.Parse()
 
 	cfg, err := LoadCfg(CFG_FILE)
@@ -131,6 +136,9 @@ func StartServer(port uint) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
+		if mock {
+			enableCors(&w)
+		}
 		var out bytes.Buffer
 		json.Indent(&out, j, "", "  ")
 
