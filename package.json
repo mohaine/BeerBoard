@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mohaine/BrewCtrl"
+    "url": "https://github.com/mohaine/BeerBoard"
   },
   "license": "GPL",
-  "homepage": "https://github.com/mohaine/BrewCtrl",
+  "homepage": "https://github.com/mohaine/BeerBoard",
   "dependencies": {
     "axios": "^0.10.0",
     "babel-polyfill": "^6.3.14",

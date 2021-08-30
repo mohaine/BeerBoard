@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mohaine/id"
+	"github.com/mohaine/beerboard/id"
 )
 
 type Tap struct {

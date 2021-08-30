@@ -6,3 +6,4 @@ web/bundle.js
 /beerboard
 go/pkg
 package-lock.json
+yarn.lock

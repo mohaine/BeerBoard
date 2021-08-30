@@ -1,7 +1,16 @@
 
 pwd = $(shell pwd)
 
+local:
+	go build beerboard.go
+	yarn install
+	yarn run build
+
 rpi:
-	env GOPATH=$(pwd)/go GOOS=linux GOARCH=arm GOARM=5 go build github.com/mohaine/beerboard
-	npm install
-	npm run build-prod
+	env GOOS=linux GOARCH=arm GOARM=5 go build beerboard.go
+	yarn install
+	yarn run build-prod
+
+
+clean:
+	rm -rf build

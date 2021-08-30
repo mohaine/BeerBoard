@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/mohaine/id"
+	"github.com/mohaine/beerboard/id"
 )
 
 var CFG_FILE = "cfg.json"
@@ -91,8 +91,7 @@ func updateCfgTap(cfg *Configuration, tapParm string) (e error) {
 	return
 }
 
-func main() {
-	port := flag.Uint("port", 80, "Web Server Port")
+func StartServer(port uint) {
 	flag.Parse()
 
 	cfg, err := LoadCfg(CFG_FILE)
@@ -143,6 +142,6 @@ func main() {
 	})
 	http.Handle("/", http.FileServer(http.Dir("web/")))
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", *port), nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 
 }
