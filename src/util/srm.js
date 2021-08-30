@@ -16,6 +16,7 @@ const srms = [SrmMapping("FFE6A0", 1), SrmMapping("FFD979", 2), SrmMapping("FFCB
 ]
 
 export const getSrmColor = function(srm) {
+  srm = parseInt(srm)
   let srmObj = srms.find(s => s.srm === srm)
-  return srmObj ? srmObj.color : undefined
+  return srmObj ? srmObj.color : "#FFE6A0"
 }
